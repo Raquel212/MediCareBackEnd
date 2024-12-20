@@ -18,6 +18,12 @@ public class AuthAppService
 
     public CadastrarUsuarioViewModel CadastrarUsuario(CadastrarUsuarioDto dto)
     {
+        if (dto.Senha != dto.SenhaConfirmacao)
+        {
+            throw new BadHttpRequestException("As senhas informadas não são correspondentes.", 
+                (int) HttpStatusCode.BadRequest);
+        }
+        
         var usuarioExistente = _context.Usuarios.FirstOrDefault(x => x.Email == dto.Email);
 
         if (usuarioExistente != null)

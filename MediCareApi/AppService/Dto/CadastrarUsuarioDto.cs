@@ -16,4 +16,7 @@ public class CadastrarUsuarioDto
 
     [Required(ErrorMessage = "A senha do usuário é obrigatória.")]
     public string Senha { get; set; }
+    
+    [Required(ErrorMessage = "É necessário informar a confirmação se senha.")]
+    public string SenhaConfirmacao { get; set; }
 }
