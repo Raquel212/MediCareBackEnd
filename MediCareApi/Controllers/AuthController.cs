@@ -1,4 +1,5 @@
-﻿using MediCareApi.AppService;
+﻿using System.Net;
+using MediCareApi.AppService;
 using MediCareApi.AppService.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,11 @@ public class AuthController : ControllerBase
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return BadRequest(new
+            {
+                status = HttpStatusCode.BadRequest,
+                errors = e.Message 
+            });
         }
     }
     
@@ -44,9 +49,14 @@ public class AuthController : ControllerBase
             var result = _appService.Login(dto);
             return Ok(result);
         }
+        
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return BadRequest(new
+            {
+                status = HttpStatusCode.BadRequest,
+                errors = e.Message 
+            });
         }
     }
 

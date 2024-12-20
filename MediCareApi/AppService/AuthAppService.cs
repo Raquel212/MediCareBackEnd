@@ -63,8 +63,8 @@ public class AuthAppService
 
     public LoginViewModel Login(LoginDto dto)
     {
-    
         var usuario = _context.Usuarios.FirstOrDefault(x => x.Email == dto.Email);
+        
         if (usuario == null)
         {
             throw new BadHttpRequestException("O usuário informado não existe no sistema.", 
