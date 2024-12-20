@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MediCareApi.Controllers;
 
 [Route("Authentication/")]
+[ApiController]
 public class AuthController : ControllerBase
 {
     private AuthAppService _appService;
