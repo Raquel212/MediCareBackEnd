@@ -15,7 +15,6 @@ public class UsuarioMap : BaseEntityMap<Usuario>
             .IsRequired();
 
         builder.Property(e => e.Senha)
-            .HasMaxLength(50)
             .IsRequired();
 
         builder.HasOne(x => x.Pessoa)
