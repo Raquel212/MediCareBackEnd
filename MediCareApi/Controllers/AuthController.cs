@@ -23,8 +23,14 @@ public class AuthController : ControllerBase
     [HttpPost]
     public ActionResult RegistrarUsuario([FromBody] CadastrarUsuarioDto dto)
     {
-        var result = _appService.CadastrarUsuario(dto);
-
-        return Created(string.Empty, result);
+        try
+        {
+            var result = _appService.CadastrarUsuario(dto);
+            return Created(string.Empty, result);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }

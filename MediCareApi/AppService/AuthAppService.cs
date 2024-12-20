@@ -1,4 +1,5 @@
-﻿using MediCareApi.AppService.Dto;
+﻿using System.Net;
+using MediCareApi.AppService.Dto;
 using MediCareApi.AppService.ViewModel;
 using MediCareApi.Entities;
 using MediCareApi.Repository.Context;
@@ -16,7 +17,15 @@ public class AuthAppService
 
     public CadastrarUsuarioViewModel CadastrarUsuario(CadastrarUsuarioDto dto)
     {
-        var pessoa = new Pessoa()
+        var usuarioExistente = _context.Usuarios.FirstOrDefault(x => x.Email == dto.Email);
+
+        if (usuarioExistente != null)
+        {
+            throw new BadHttpRequestException("O email informado já está cadastrado no sistema.", 
+                (int) HttpStatusCode.BadRequest);
+        }
+        
+        var pessoa = new Pessoa
         {
             Nome = dto.Nome,
             Sobrenome = dto.Sobrenome,
