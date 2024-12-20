@@ -8,7 +8,7 @@ public class Usuario : BaseEntity
     public required string Email { get; set; }
     
     [Required(ErrorMessage = "A senha do usuário é obrigatória.")]
-    public required string Senha { get; set; }
+    public string Senha { get; set; }
     
     public Guid PessoaId { get; set; }
     public Pessoa Pessoa { get; set; }

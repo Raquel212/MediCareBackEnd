@@ -2,6 +2,7 @@
 using MediCareApi.AppService.ViewModel;
 using MediCareApi.Entities;
 using MediCareApi.Repository.Context;
+using Microsoft.AspNetCore.Identity;
 
 namespace MediCareApi.AppService;
 
@@ -21,12 +22,15 @@ public class AuthAppService
             Sobrenome = dto.Sobrenome,
         };
 
-        var usuario = new Usuario()
+        var passwordHash = new PasswordHasher<Usuario>();
+        
+        var usuario = new Usuario
         {
             Email = dto.Email,
-            Senha = dto.Senha,
             Pessoa = pessoa
         };
+
+        usuario.Senha = passwordHash.HashPassword(usuario, dto.Senha);
         
         _context.Usuarios.Add(usuario);
         
