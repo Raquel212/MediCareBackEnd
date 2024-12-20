@@ -1,4 +1,5 @@
 ﻿using MediCareApi.Entities;
+using MediCareApi.Repository.Context.Maps;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediCareApi.Repository.Context;
@@ -19,7 +20,8 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
-        
+
+        modelBuilder.ApplyConfiguration(new PessoaMap());
+        modelBuilder.ApplyConfiguration(new UsuarioMap());
     }
 }
