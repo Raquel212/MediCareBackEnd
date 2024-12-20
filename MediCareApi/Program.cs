@@ -15,14 +15,14 @@ builder.Services.AddEndpointsApiExplorer();
 #region swaggerConfig
 builder.Services.AddSwaggerGen(c =>
 {
-    // Define a segurança no Swagger (cadeado)
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
-        Description = "Insira o Token JWT",
+        Description = "Insira o Token JWT. No formado 'Bearer Token'",
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey,
-        BearerFormat = "JWT"
+        BearerFormat = "JWT",
+        
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement

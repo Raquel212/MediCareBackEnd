@@ -1,5 +1,6 @@
 ﻿using MediCareApi.AppService;
 using MediCareApi.AppService.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediCareApi.Controllers;
@@ -47,5 +48,12 @@ public class AuthController : ControllerBase
         {
             return BadRequest(e.Message);
         }
+    }
+
+    [HttpGet]
+    [Authorize]
+    public ActionResult TesteLogin()
+    {
+        return Ok("Autenticado");
     }
 }
