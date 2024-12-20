@@ -33,4 +33,19 @@ public class AuthController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+    
+    [HttpPost]
+    [Route("login")]
+    public ActionResult Authenticate([FromBody] LoginDto dto)
+    {
+        try
+        {
+            var result = _appService.Login(dto);
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

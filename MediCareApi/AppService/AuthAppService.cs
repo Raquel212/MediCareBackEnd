@@ -2,6 +2,7 @@
 using MediCareApi.AppService.Dto;
 using MediCareApi.AppService.ViewModel;
 using MediCareApi.Entities;
+using MediCareApi.Jwt;
 using MediCareApi.Repository.Context;
 using Microsoft.AspNetCore.Identity;
 
@@ -51,6 +52,34 @@ public class AuthAppService
             Email = usuario.Email,
             Nome = pessoa.Nome,
             Sobrenome = pessoa.Sobrenome,
+        };
+    }
+
+    public LoginViewModel Login(LoginDto dto)
+    {
+    
+        var usuario = _context.Usuarios.FirstOrDefault(x => x.Email == dto.Email);
+        if (usuario == null)
+        {
+            throw new BadHttpRequestException("O usuário informado não existe no sistema.", 
+                (int) HttpStatusCode.BadRequest);
+        }
+        
+        var passwordHash = new PasswordHasher<Usuario>();
+        
+        var senhaValida = passwordHash.VerifyHashedPassword(usuario, usuario.Senha, dto.Senha);
+
+        if (senhaValida == PasswordVerificationResult.Failed)
+        {
+            throw new BadHttpRequestException("A senha informada não coincide com a cadastrada no sistema.", 
+                (int) HttpStatusCode.BadRequest);
+        }
+        
+        var token = TokenService.GenerateToken(usuario);
+
+        return new LoginViewModel
+        {
+            Token = token
         };
     }
 }
