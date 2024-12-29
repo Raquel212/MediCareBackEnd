@@ -16,12 +16,7 @@ public class AuthController : ControllerBase
     {
         _appService = new AuthAppService();
     }
-
-    /// <summary>
-    /// Cria um usuário.
-    /// </summary>
-    /// <param name="dto"></param>
-    /// <returns>Usuário criado.</returns>
+    
     [HttpPost]
     public ActionResult RegistrarUsuario([FromBody] CadastrarUsuarioDto dto)
     {
