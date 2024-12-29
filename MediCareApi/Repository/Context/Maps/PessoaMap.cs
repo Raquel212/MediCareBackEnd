@@ -17,7 +17,5 @@ public class PessoaMap : BaseEntityMap<Pessoa>
         builder.Property(e => e.Sobrenome)
             .HasMaxLength(50)
             .IsRequired();
-        
-        builder.ToTable("Pessoa", "MediCare");
     }
 }

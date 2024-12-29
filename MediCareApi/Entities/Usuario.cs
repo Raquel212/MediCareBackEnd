@@ -12,4 +12,6 @@ public class Usuario : BaseEntity
     
     public Guid PessoaId { get; set; }
     public Pessoa Pessoa { get; set; }
+    
+    public IEnumerable<Medicamento> Medicamentos { get; set; }
 }

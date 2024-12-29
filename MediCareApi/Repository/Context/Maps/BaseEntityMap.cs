@@ -14,5 +14,7 @@ public class BaseEntityMap<TDomain> : IEntityTypeConfiguration<TDomain> where TD
             .HasColumnName("Id")
             .IsRequired()
             .ValueGeneratedOnAdd();
+
+        builder.ToTable(typeof(TDomain).Name, "MediCare");
     }
 }

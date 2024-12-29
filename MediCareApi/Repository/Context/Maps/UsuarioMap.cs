@@ -20,7 +20,5 @@ public class UsuarioMap : BaseEntityMap<Usuario>
         builder.HasOne(x => x.Pessoa)
             .WithOne(x => x.Usuario)
             .HasForeignKey<Usuario>(x => x.PessoaId);
-        
-        builder.ToTable("Usuario", "MediCare");
     }
 }
