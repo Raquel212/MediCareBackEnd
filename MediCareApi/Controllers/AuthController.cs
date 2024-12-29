@@ -54,11 +54,4 @@ public class AuthController : ControllerBase
             });
         }
     }
-
-    [HttpGet]
-    [Authorize]
-    public ActionResult TesteLogin()
-    {
-        return Ok("Autenticado");
-    }
 }
