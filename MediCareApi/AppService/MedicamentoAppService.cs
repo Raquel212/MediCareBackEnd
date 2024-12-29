@@ -20,7 +20,7 @@ public class MedicamentoAppService
     {
         var usuarioId = Acessor.ObterIdUsuario();
 
-        var medicamentoExistente = _context.Medicamentos.FirstOrDefault(x => x.Nome == dto.Nome &&
+        var medicamentoExistente = _context.Medicamentos.FirstOrDefault(x => x.Nome.ToUpper() == dto.Nome.ToUpper() &&
                                                                              x.Dosagem == dto.Dosagem &&
                                                                              x.UsuarioId == usuarioId);
 
