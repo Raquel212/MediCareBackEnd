@@ -16,7 +16,7 @@ public class MedicamentoAppService
         _context = new AppDbContext();
     }
 
-    public CadastrarMedicamentoDto CadastrarMedicamento(CadastrarMedicamentoDto dto)
+    public ObterMedicamentoDto CadastrarMedicamento(CadastrarMedicamentoDto dto)
     {
         var usuarioId = Acessor.ObterIdUsuario();
 
@@ -38,16 +38,119 @@ public class MedicamentoAppService
             Horario = dto.Horario,
             UsuarioId = usuarioId
         };
-        
+
         _context.Medicamentos.Add(medicamento);
         _context.SaveChanges();
 
-        return new CadastrarMedicamentoDto
+        return new ObterMedicamentoDto
         {
+            Id = medicamento.Id,
             Nome = medicamento.Nome,
             Quantidade = medicamento.Quantidade,
             Dosagem = medicamento.Dosagem,
             Horario = medicamento.Horario,
         };
+    }
+
+    public ObterMedicamentoDto ObterMedicamento(Guid id)
+    {
+        var usuarioId = Acessor.ObterIdUsuario();
+
+        var medicamentoExistente = _context.Medicamentos.FirstOrDefault(x => x.Id == id &&
+                                                                             x.UsuarioId == usuarioId);
+
+        if (medicamentoExistente == null)
+        {
+            throw new BadHttpRequestException("O medicamento não foi encontrado",
+                (int)HttpStatusCode.BadRequest);
+        }
+
+        return new ObterMedicamentoDto
+        {
+            Id = medicamentoExistente.Id,
+            Nome = medicamentoExistente.Nome,
+            Quantidade = medicamentoExistente.Quantidade,
+            Dosagem = medicamentoExistente.Dosagem,
+            Horario = medicamentoExistente.Horario,
+        };
+    }
+
+    public List<ObterMedicamentoDto> ListarMedicamentos(int pagina = 1, int quantidadePorPagina = 10)
+    {
+        var usuarioId = Acessor.ObterIdUsuario();
+
+        if (pagina <= 0) pagina = 1;
+        if (quantidadePorPagina <= 0) quantidadePorPagina = 10;
+
+        var skip = (pagina - 1) * quantidadePorPagina;
+
+        var medicamentos = _context.Medicamentos
+            .Where(x => x.UsuarioId == usuarioId)
+            .Skip(skip)
+            .Take(quantidadePorPagina)
+            .ToList();
+
+        if (medicamentos.Count == 0)
+        {
+            throw new BadHttpRequestException("Nenhum medicamento encontrado para a página solicitada",
+                (int)HttpStatusCode.NotFound);
+        }
+
+        var medicamentosDto = medicamentos.Select(m => new ObterMedicamentoDto
+        {
+            Id = m.Id,
+            Nome = m.Nome,
+            Quantidade = m.Quantidade,
+            Dosagem = m.Dosagem,
+            Horario = m.Horario,
+        }).ToList();
+
+        return medicamentosDto;
+    }
+
+    public ObterMedicamentoDto AtualizarMedicamento(Guid id, CadastrarMedicamentoDto medicamentoDto)
+    {
+        var usuarioId = Acessor.ObterIdUsuario();
+
+        var medicamentoExistente = _context.Medicamentos
+            .FirstOrDefault(x => x.Id == id && x.UsuarioId == usuarioId);
+
+        if (medicamentoExistente == null)
+        {
+            throw new BadHttpRequestException("Medicamento não encontrado", (int)HttpStatusCode.NotFound);
+        }
+
+        medicamentoExistente.Nome = medicamentoDto.Nome;
+        medicamentoExistente.Quantidade = medicamentoDto.Quantidade;
+        medicamentoExistente.Dosagem = medicamentoDto.Dosagem;
+        medicamentoExistente.Horario = medicamentoDto.Horario;
+
+        _context.Medicamentos.Update(medicamentoExistente);
+        _context.SaveChanges();
+
+        return new ObterMedicamentoDto
+        {
+            Id = medicamentoExistente.Id,
+            Nome = medicamentoExistente.Nome,
+            Quantidade = medicamentoExistente.Quantidade,
+            Dosagem = medicamentoExistente.Dosagem,
+            Horario = medicamentoExistente.Horario
+        };
+    }
+    
+    public void ExcluirMedicamento(Guid id)
+    {
+        var usuarioId = Acessor.ObterIdUsuario();
+
+        var medicamentoExistente = _context.Medicamentos
+            .FirstOrDefault(x => x.Id == id && x.UsuarioId == usuarioId);
+
+        if (medicamentoExistente == null)
+        {
+            throw new BadHttpRequestException("Medicamento não encontrado", (int)HttpStatusCode.NotFound);
+        }
+
+        _context.Medicamentos.Remove(medicamentoExistente);
+        _context.SaveChanges();
     }
 }
