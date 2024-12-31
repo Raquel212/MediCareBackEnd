@@ -9,4 +9,6 @@ public class Medicamento : BaseEntity
     
     public Guid UsuarioId { get; set; }
     public Usuario Usuario { get; set; }
+    public IEnumerable<Agendamento> Agendamentos { get; set; }
+
 }

@@ -7,6 +7,7 @@ namespace MediCareApi.Repository.Context;
 public class AppDbContext : DbContext
 {
     public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Agendamento> Agendamentos { get; set; }
     public DbSet<Pessoa> Pessoas { get; set; }
     public DbSet<Medicamento> Medicamentos { get; set; }
 
@@ -25,5 +26,6 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new PessoaMap());
         modelBuilder.ApplyConfiguration(new UsuarioMap());
         modelBuilder.ApplyConfiguration(new MedicamentoMap());
+        modelBuilder.ApplyConfiguration(new AgendamentoMap());
     }
 }
