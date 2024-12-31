@@ -42,7 +42,7 @@ public class AgendamentoController : ControllerBase
     {
         try
         {
-            var result = _appService.ListarMedicamentos();
+            var result = _appService.ListarAgendamentos(pagina, quantidadePorPagina);
             return Ok(result);
         }
         catch (Exception e)

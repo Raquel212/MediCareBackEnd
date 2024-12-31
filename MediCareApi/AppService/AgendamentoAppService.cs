@@ -33,7 +33,7 @@ public class AgendamentoAppService
         _context.SaveChanges();
     }
 
-    public IEnumerable<ObterAgendamentosViewModel> ListarMedicamentos(int pagina = 1, int quantidadePorPagina = 10)
+    public IEnumerable<ObterAgendamentosViewModel> ListarAgendamentos(int pagina = 1, int quantidadePorPagina = 10)
     {
         var usuarioId = Acessor.ObterIdUsuario();
 
