@@ -25,6 +25,7 @@ public class AgendamentoAppService
         var agendamento = new Agendamento()
         {
             Horario = dto.Horario,
+            Frequencia = dto.Frequencia,
             MedicamentoId = dto.MedicamentoId,
             UsuarioId = usuarioId
         };

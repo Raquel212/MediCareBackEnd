@@ -13,6 +13,9 @@ public class AgendamentoMap: BaseEntityMap<Agendamento>
         builder.Property(e => e.Horario)
             .IsRequired();
         
+        builder.Property(e => e.Frequencia)
+            .IsRequired();
+        
         builder.HasOne(e => e.Medicamento)
             .WithMany(e => e.Agendamentos)
             .HasForeignKey(e => e.MedicamentoId);
