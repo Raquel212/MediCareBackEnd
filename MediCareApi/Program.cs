@@ -1,6 +1,8 @@
 using System.Text;
 using MediCareApi.Jwt;
+using MediCareApi.Repository.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -23,7 +25,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddHttpContextAccessor();
+
 #region swaggerConfig
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -33,7 +37,6 @@ builder.Services.AddSwaggerGen(c =>
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey,
         BearerFormat = "JWT",
-        
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -51,9 +54,11 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
 #endregion
 
 #region jwt config
+
 //JWT
 var jwtKey = Encoding.ASCII.GetBytes(Settings.Secret);
 builder.Services.AddAuthentication(x =>
@@ -71,17 +76,38 @@ builder.Services.AddAuthentication(x =>
         ValidateIssuer = false,
         ValidateAudience = false
     };
-});;
+});
+;
+
 #endregion
+
+builder.Services.AddDbContext<AppDbContext>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<AppDbContext>();
+    var logger = services.GetRequiredService<ILogger<Program>>();
+
+    try
+    {
+        logger.LogInformation("Iniciando migração do banco de dados.");
+        await dbContext.Database.MigrateAsync();
+        logger.LogInformation("Migração concluída com sucesso.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Erro ao migrar o banco de dados.");
+    }
 }
+
+// Configure the HTTP request pipeline.
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
