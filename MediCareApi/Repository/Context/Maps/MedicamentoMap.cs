@@ -21,6 +21,8 @@ public class MedicamentoMap : BaseEntityMap<Medicamento>
 
         builder.Property(e => e.Horario);
 
+        builder.Property(e => e.TempoDeTratamento);
+
         builder.HasOne(e => e.Usuario)
             .WithMany(e => e.Medicamentos)
             .HasForeignKey(e => e.UsuarioId);

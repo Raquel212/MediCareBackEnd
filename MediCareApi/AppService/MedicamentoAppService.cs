@@ -23,7 +23,6 @@ public class MedicamentoAppService
         var medicamentoExistente = _context.Medicamentos.FirstOrDefault(x => x.Nome.ToUpper() == dto.Nome.ToUpper() &&
                                                                              x.Dosagem == dto.Dosagem &&
                                                                              x.UsuarioId == usuarioId);
-
         if (medicamentoExistente != null)
         {
             throw new BadHttpRequestException("O medicamento informado já foi cadastrado.",
@@ -36,7 +35,8 @@ public class MedicamentoAppService
             Dosagem = dto.Dosagem,
             Quantidade = dto.Quantidade,
             Horario = dto.Horario,
-            UsuarioId = usuarioId
+            UsuarioId = usuarioId,
+            TempoDeTratamento = dto.TempoDeTratamento
         };
 
         _context.Medicamentos.Add(medicamento);
@@ -49,6 +49,7 @@ public class MedicamentoAppService
             Quantidade = medicamento.Quantidade,
             Dosagem = medicamento.Dosagem,
             Horario = medicamento.Horario,
+            TempoDeTratamento = medicamento.TempoDeTratamento
         };
     }
 
@@ -72,6 +73,7 @@ public class MedicamentoAppService
             Quantidade = medicamentoExistente.Quantidade,
             Dosagem = medicamentoExistente.Dosagem,
             Horario = medicamentoExistente.Horario,
+            TempoDeTratamento = medicamentoExistente.TempoDeTratamento
         };
     }
 
@@ -103,6 +105,7 @@ public class MedicamentoAppService
             Quantidade = m.Quantidade,
             Dosagem = m.Dosagem,
             Horario = m.Horario,
+            TempoDeTratamento = m.TempoDeTratamento
         }).ToList();
 
         return medicamentosDto;
@@ -124,6 +127,7 @@ public class MedicamentoAppService
         medicamentoExistente.Quantidade = medicamentoDto.Quantidade;
         medicamentoExistente.Dosagem = medicamentoDto.Dosagem;
         medicamentoExistente.Horario = medicamentoDto.Horario;
+        medicamentoExistente.TempoDeTratamento = medicamentoDto.TempoDeTratamento;
 
         _context.Medicamentos.Update(medicamentoExistente);
         _context.SaveChanges();
@@ -134,7 +138,8 @@ public class MedicamentoAppService
             Nome = medicamentoExistente.Nome,
             Quantidade = medicamentoExistente.Quantidade,
             Dosagem = medicamentoExistente.Dosagem,
-            Horario = medicamentoExistente.Horario
+            Horario = medicamentoExistente.Horario,
+            TempoDeTratamento = medicamentoExistente.TempoDeTratamento
         };
     }
     

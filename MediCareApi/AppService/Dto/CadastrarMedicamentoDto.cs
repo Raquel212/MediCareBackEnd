@@ -11,4 +11,5 @@ public class CadastrarMedicamentoDto
     [Required(ErrorMessage = "A dosagem é obrigatória.")]
     public string Dosagem { get; set; }
     public string? Horario { get; set; }
+    public string? TempoDeTratamento { get; set; }
 }

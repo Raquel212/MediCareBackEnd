@@ -7,4 +7,5 @@ public class ObterMedicamentoDto
     public int Quantidade { get; set; }
     public string Dosagem { get; set; }
     public string? Horario { get; set; }
+    public string? TempoDeTratamento { get; set; }
 }
