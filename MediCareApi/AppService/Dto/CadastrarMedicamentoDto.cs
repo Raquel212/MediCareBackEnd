@@ -12,4 +12,5 @@ public class CadastrarMedicamentoDto
     public string Dosagem { get; set; }
     public string? Horario { get; set; }
     public string? TempoDeTratamento { get; set; }
+    public string? DataRegistro { get; set; }
 }

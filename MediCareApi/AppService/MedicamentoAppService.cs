@@ -36,7 +36,8 @@ public class MedicamentoAppService
             Quantidade = dto.Quantidade,
             Horario = dto.Horario,
             UsuarioId = usuarioId,
-            TempoDeTratamento = dto.TempoDeTratamento
+            TempoDeTratamento = dto.TempoDeTratamento,
+            DataRegistro = dto.DataRegistro
         };
 
         _context.Medicamentos.Add(medicamento);
@@ -73,7 +74,8 @@ public class MedicamentoAppService
             Quantidade = medicamentoExistente.Quantidade,
             Dosagem = medicamentoExistente.Dosagem,
             Horario = medicamentoExistente.Horario,
-            TempoDeTratamento = medicamentoExistente.TempoDeTratamento
+            TempoDeTratamento = medicamentoExistente.TempoDeTratamento,
+            DataRegistro = medicamentoExistente.DataRegistro
         };
     }
 
@@ -105,7 +107,8 @@ public class MedicamentoAppService
             Quantidade = m.Quantidade,
             Dosagem = m.Dosagem,
             Horario = m.Horario,
-            TempoDeTratamento = m.TempoDeTratamento
+            TempoDeTratamento = m.TempoDeTratamento,
+            DataRegistro = m.DataRegistro
         }).ToList();
 
         return medicamentosDto;
@@ -128,6 +131,7 @@ public class MedicamentoAppService
         medicamentoExistente.Dosagem = medicamentoDto.Dosagem;
         medicamentoExistente.Horario = medicamentoDto.Horario;
         medicamentoExistente.TempoDeTratamento = medicamentoDto.TempoDeTratamento;
+        medicamentoExistente.DataRegistro = medicamentoDto.DataRegistro;
 
         _context.Medicamentos.Update(medicamentoExistente);
         _context.SaveChanges();

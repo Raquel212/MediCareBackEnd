@@ -22,6 +22,8 @@ public class MedicamentoMap : BaseEntityMap<Medicamento>
         builder.Property(e => e.Horario);
 
         builder.Property(e => e.TempoDeTratamento);
+        
+        builder.Property(e => e.DataRegistro);
 
         builder.HasOne(e => e.Usuario)
             .WithMany(e => e.Medicamentos)
