@@ -13,11 +13,10 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql(
-            "Server=database;" +
-            "Port=5432;" +
-            "Database=postgres;" +
-            "Uid=admin;" +
-            "Pwd=admin;");
+            "Host=ep-fancy-moon-a8y2j5fp-pooler.eastus2.azure.neon.tech;" +
+                          "Database=neondb;" +
+                          "Username=neondb_owner;" +
+                          "Password=npg_2bINOB7ryvLT;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
